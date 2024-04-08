@@ -1,6 +1,6 @@
 const express = require("express");
 const mogran = require("morgan");
-const compression = require('compression')
+var compression = require('compression')
 const helmet  = require ("helmet");
 const app = express();
 
@@ -12,6 +12,9 @@ app.use(compression());
 
 // -----Init DB-----
 
+require("./db/init.mongodb");
+const {checkOverLoad} = require("./helpers/check.connect");
+checkOverLoad();
 // -----Init routes-----
 
 // -----handling error-----
