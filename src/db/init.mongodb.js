@@ -1,7 +1,8 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const CONNECT_STRING_DB = "mongodb://localhost:27017/CodingSocial";
+const { db: {host, port, name}} = require("../configs/config.mongodb");
+const CONNECT_STRING_DB = `mongodb://${host}:${port}/${name}`;
 const { countConnect } = require("../helpers/check.connect");
 
 class Database {
