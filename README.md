@@ -5,3 +5,4 @@
 5. npm i compression (giảm size cho dữ liệu)
 6. npm install mongoose
 7. Follow Strategy pattern
+8. Thuật toán bất đối xứng khi thực hiện chức năng SignUp, RSA, crypto build in NodeJS.
