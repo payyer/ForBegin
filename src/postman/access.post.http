@@ -1,0 +1,11 @@
+@url_dev=http://localhost:8000/v1/api/
+
+### signup
+POST {{url_dev}}shop/signup
+Content-Type: application/json
+
+{
+    "name": "Lê Quốc Anh2 ",
+    "email" : "email@gmail.com",
+    "password": "1q2w3E*"
+}
