@@ -20,15 +20,15 @@ const checkOverLoad = () => {
     // Kiểm tra memory đã xử dụng
     const memoryUsage = process.memoryUsage().rss;
 
-    console.log(`Active connection : ${numConnection}`);
-    console.log(`Memory Usage : ${memoryUsage / 1024 / 1024} MB`);
+    console.log(`Active connection : ${numConnection}`)
+    console.log(`Memory Usage : ${memoryUsage / 1024 / 1024} MB`)
 
     // Example maximum number of connections based of cores
-    const maxConnection = numCore * 5;
+    const maxConnection = numCore * 5
 
     // Nếu sl connection lớn hơn maxinum number connect của core thì log ra
     if (numConnection > maxConnection) {
-      console.log(`Connection Overload detected!`);
+      console.log(`Connection Overload detected!`)
     }
   }, _Seconds); // Monitor every 5 seconds
 };

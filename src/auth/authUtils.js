@@ -5,7 +5,7 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
     // accessToken
     // payload để chứa thông tin từ hệ thống này sang hệ thống khác
     // privateKey không lưu vào DB chỉ xảy ra 1 lần khi đăng ký hoặc đăng nhập và đẩy về client
-    const accessToken = await jwt.sign(payload, privateKey, {
+    const accessToken = await jwt.sign(payload, publicKey, {
       // algorithm: "RS256", khi dùng thuật toán RSA thì uncomment
       expiresIn: "2 days",
     });
