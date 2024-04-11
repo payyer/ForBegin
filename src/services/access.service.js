@@ -4,7 +4,7 @@ const crypto = require("node:crypto");
 const KeyTokenService = require("./keyToken.service");
 const { createTokenPair } = require("../auth/authUtils");
 const { getInforData } = require("../utils");
-const { BadRequestError } = require("../core/error.respone");
+const { ConflicRequestError } = require("../core/error.respone");
 
 const RoleShop = {
   SHOP: "SHOP",
@@ -19,7 +19,7 @@ class AccessService {
 
     const holderShop = await shopModel.findOne({ email }).lean(); // lean để tăng tốc độ , giảm size trả về
     if (holderShop) {
-      throw BadRequestError('Error: Shop is already exsit!')
+      throw new ConflicRequestError('Error: Shop is already exsit!')
     }
     // có thể cho salt theo document nhưng để 10 để CPU đỡ tốn
     const passwordHash = await bcrypt.hashSync(password, 10);
