@@ -1,6 +1,6 @@
 // Tạo token
-
 const keytokenModel = require("../models/keytoken.model");
+const { Types, default: mongoose } = require('mongoose');
 
 class KeyTokenService {
   static createKeyToken = async ({ userId, publicKey, privateKey, refreshToken }) => {
@@ -36,5 +36,12 @@ class KeyTokenService {
       return error;
     }
   };
+  static findByUserId = async (userId) => {
+    return await keytokenModel.findOne({ user: new mongoose.Types.ObjectId(userId) }).lean()
+  }
+
+  static removeKeyById = async (id) => {
+    return await keytokenModel.deleteOne({ _id: id })
+  }
 }
 module.exports = KeyTokenService;

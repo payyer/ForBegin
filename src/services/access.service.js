@@ -15,23 +15,41 @@ const RoleShop = {
 };
 
 class AccessService {
+  static logout = async (keyStore) => {
+    const delKey = await KeyTokenService.removeKeyById(keyStore._id)
+    console.log(delKey)
+    return delKey
+  }
+
+  // login
+  /*
+    1. Check email in dbs
+    2. match password
+    3. create accesstoken and refreshToken
+    4  genagrate tokens
+    5  get data return login
+   */
+
   static login = async ({ email, password, refreshToken = null }) => {
+
+    // 1. Check email in dbs
     const foundShop = await findShopByEmail({ email })
     if (!foundShop) throw new BadRequestError("Shop not registered", 404)
 
+    // 2. match password
     const match = bcrypt.compareSync(password, foundShop.password)
     if (!match) throw new BadRequestError("Password incorrect ", 400)
 
-    // Create private and public key
+    // 3. create accesstoken and refreshToken
     const privateKey = crypto.randomBytes(64).toString("hex");
     const publicKey = crypto.randomBytes(64).toString("hex");
 
+    // 4  genagrate tokens
     const tokens = await createTokenPair(
       { userId: foundShop._id, email },
       publicKey,
       privateKey
     );
-
     await KeyTokenService.createKeyToken({
       userId: foundShop._id,
       privateKey,
@@ -39,6 +57,7 @@ class AccessService {
       refreshToken: tokens.refreshToken
     })
 
+    // 5  get data return login
     return {
       shop: getInforData({
         fields: ["_id", "name", "email"],
