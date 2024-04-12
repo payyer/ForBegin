@@ -1,4 +1,4 @@
-const { Schema, model, Collection } = require("mongoose"); // Erase if already required
+const { Schema, model } = require("mongoose"); // Erase if already required
 const DOCUMENT_NAME = "Key";
 const COLLECTION_NAME = "Keys";
 
@@ -18,10 +18,14 @@ var keyTokenSchema = new Schema(
       type: String,
       required: true,
     },
-    refeshToken: {
+    refeshTokensUsed: {
       type: Array,
       default: [],
     },
+    refreshToken: {
+      type: String,
+      required: true
+    }
   },
   {
     timestamps: true,

@@ -4,7 +4,8 @@ const crypto = require("node:crypto");
 const KeyTokenService = require("./keyToken.service");
 const { createTokenPair } = require("../auth/authUtils");
 const { getInforData } = require("../utils");
-const { ConflicRequestError } = require("../core/error.respone");
+const { ConflicRequestError, BadRequestError } = require("../core/error.respone");
+const { findShopByEmail } = require("./shop.service");
 
 const RoleShop = {
   SHOP: "SHOP",
@@ -14,6 +15,39 @@ const RoleShop = {
 };
 
 class AccessService {
+  static login = async ({ email, password, refreshToken = null }) => {
+    const foundShop = await findShopByEmail({ email })
+    if (!foundShop) throw new BadRequestError("Shop not registered", 404)
+
+    const match = bcrypt.compareSync(password, foundShop.password)
+    if (!match) throw new BadRequestError("Password incorrect ", 400)
+
+    // Create private and public key
+    const privateKey = crypto.randomBytes(64).toString("hex");
+    const publicKey = crypto.randomBytes(64).toString("hex");
+
+    const tokens = await createTokenPair(
+      { userId: foundShop._id, email },
+      publicKey,
+      privateKey
+    );
+
+    await KeyTokenService.createKeyToken({
+      userId: foundShop._id,
+      privateKey,
+      publicKey,
+      refreshToken: tokens.refreshToken
+    })
+
+    return {
+      shop: getInforData({
+        fields: ["_id", "name", "email"],
+        object: foundShop,
+      }),
+      tokens,
+    }
+  }
+
   static sighUp = async ({ name, email, password }) => {
     // kiểm tra email có tồn tại không
 
@@ -50,9 +84,11 @@ class AccessService {
       console.log({ privateKey }, { publicKey });
       // save collection KeyStore
       const keyStore = await KeyTokenService.createKeyToken(
-        newShop._id,
-        publicKey,
-        privateKey
+        {
+          userId: newShop._id,
+          publicKey,
+          privateKey
+        }
       );
 
       if (!keyStore) {
