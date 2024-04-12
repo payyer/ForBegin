@@ -48,9 +48,9 @@ class AccessService {
     }
   }
 
-  static sighUp = async ({ name, email, password }) => {
+  static signUp = async ({ name, email, password }) => {
     // kiểm tra email có tồn tại không
-
+    console.log("password", password)
     const holderShop = await shopModel.findOne({ email }).lean(); // lean để tăng tốc độ , giảm size trả về
     if (holderShop) {
       throw new ConflicRequestError('Error: Shop is already exsit!')

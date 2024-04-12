@@ -12,11 +12,11 @@ x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f
 
 ### signup
 POST {{url_dev}}shop/signup
-Content-Type: appli2cation/json
+Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
 
 {
-    "name": "Lê Quốc Anh ",
-    "email" : "11@gmail.com",
-    "password": "1q2w3E*"
+    "name": "Lê Quốc Anh",
+    "email" : "kjh@gmail.com",
+    "password": "1q2w3Eu"
 }
