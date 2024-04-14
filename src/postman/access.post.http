@@ -6,7 +6,7 @@ Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
 
 {
-    "email" : "11@gmail.com",
+    "email" : "string@gmail.com",
     "password": "1q2w3E*"
 }
 
@@ -17,14 +17,24 @@ x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f
 
 {
     "name": "Lê Quốc Anh",
-    "email" : "kjh@gmail.com",
-    "password": "1q2w3Eu"
+    "email" : "string@gmail.com",
+    "password": "1q2w3E*"
 }
 
 ### logout
 POST {{url_dev}}shop/logout
 Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
-x-client-id: 6618b7dc85121a64ec4c3a93
-AUTHORIZATION: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjE4YjdkYzg1MTIxYTY0ZWM0YzNhOTMiLCJlbWFpbCI6IjExQGdtYWlsLmNvbSIsImlhdCI6MTcxMjkxMzkwOSwiZXhwIjoxNzEzMDg2NzA5fQ.fsFcsZB-_M-3EjmsWRp7MvbyOxGyBJlhrjVzczmCnaE
+x-client-id: 661b3d62dd0ac5d0bd4dda73
+AUTHORIZATION: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTMwOTE3MzYsImV4cCI6MTcxMzI2NDUzNn0.LKlmX5HgIzPDGJnWMipj8sFVSiO17otmSNfzQU43Ffw
 
+### HandlerRefreshToken 
+POST {{url_dev}}shop/handleRefreshToken
+Content-Type: application/json
+x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
+x-client-id: 661b3d62dd0ac5d0bd4dda73
+AUTHORIZATION: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTMwOTE3MzYsImV4cCI6MTcxMzI2NDUzNn0.LKlmX5HgIzPDGJnWMipj8sFVSiO17otmSNfzQU43Ffw
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTMwOTE3MzYsImV4cCI6MTcxMzI2NDUzNn0.jbW1K5IZlKZ-IqOHCQBQq87PdIBMMDkLaN-GYjqtPqI"
+}

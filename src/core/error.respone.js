@@ -9,6 +9,7 @@ const StatusCode = {
 const ReasonStatusCode = {
     FORBIDEN: "Bad request error",
     CONFLICT: "Conflict error"
+
 }
 
 class ErrorRespone extends Error {
@@ -20,6 +21,12 @@ class ErrorRespone extends Error {
 
 class ConflicRequestError extends ErrorRespone {
     constructor(message = ReasonStatusCode.CONFLICT, statusCode = StatusCode.CONFLICT) {
+        super(message, statusCode)
+    }
+}
+
+class ForbdenError extends ErrorRespone {
+    constructor(message = ReasonStatusCode.FORBIDEN, statusCode = StatusCode.FORBIDEN) {
         super(message, statusCode)
     }
 }
@@ -45,5 +52,6 @@ module.exports = {
     ConflicRequestError,
     BadRequestError,
     AuthFailError,
-    NodeFoundError
+    NodeFoundError,
+    ForbdenError
 }

@@ -2,9 +2,9 @@ const shopModel = require("../models/shop.model");
 const bcrypt = require("bcrypt");
 const crypto = require("node:crypto");
 const KeyTokenService = require("./keyToken.service");
-const { createTokenPair } = require("../auth/authUtils");
+const { createTokenPair, verifyJWT } = require("../auth/authUtils");
 const { getInforData } = require("../utils");
-const { ConflicRequestError, BadRequestError } = require("../core/error.respone");
+const { ConflicRequestError, BadRequestError, ForbdenError, AuthFailError } = require("../core/error.respone");
 const { findShopByEmail } = require("./shop.service");
 
 const RoleShop = {
@@ -29,7 +29,6 @@ class AccessService {
     4  genagrate tokens
     5  get data return login
    */
-
   static login = async ({ email, password, refreshToken = null }) => {
 
     // 1. Check email in dbs
@@ -144,6 +143,53 @@ class AccessService {
       metadata: null,
     };
   };
+
+
+  /*
+    Protect user by hacker
+  */
+  static handleRefreshToken = async (refreshToken) => {
+    // check this token is used?
+    const foundToken = await KeyTokenService.findByRefeshTokenUsed(refreshToken)
+    // if used
+    if (foundToken) {
+      // decode and take userId, email
+      const { userId, email } = await verifyJWT(refreshToken, foundToken.privateKey)
+      console.log({ userId, email })
+      // delete keyStore by userId
+      await KeyTokenService.deleteByUserId(userId)
+      throw new ForbdenError("Something wrong happend!! Please relogin")
+    }
+
+    // if didn't use
+    const holderToken = await KeyTokenService.findByRefeshToken(refreshToken)
+    if (!holderToken) throw new AuthFailError("Shop not register!")
+
+    // verify token 
+    const { userId, email } = await verifyJWT(refreshToken, holderToken.privateKey)
+
+    // check userId 
+    const foundShop = await findShopByEmail({ email })
+    console.log(`[2]---:`, { userId, email })
+    if (!foundShop) throw new AuthFailError("Shop not register!")
+
+    // create new token pair
+    const tokens = await createTokenPair({ userId, email }, holderToken.publicKey, holderToken.privateKey)
+
+    // update token
+    await holderToken.updateOne({
+      $set: {
+        refreshToken: tokens.refreshToken // update new refreshToken for user
+      },
+      $addToSet: {
+        refeshTokensUsed: refreshToken // add old refreshToken to list refreshTokenUsed
+      }
+    })
+    return {
+      user: { userId, email },
+      tokens
+    }
+  }
 }
 
 module.exports = AccessService;
