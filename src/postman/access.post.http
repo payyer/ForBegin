@@ -35,7 +35,7 @@ x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f
 x-client-id: 661b3d62dd0ac5d0bd4dda73
 x-refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTMzNDUzOTcsImV4cCI6MTcxMzk1MDE5N30.oITazZbYWnlNgUm2yLbrI4RGCnScQAkxm6HsQJYlGto
 
-### Create Product
+### Create Product / change product_attributes with same type
 POST {{url_dev}}product
 Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
@@ -43,16 +43,16 @@ x-client-id: 661b3d62dd0ac5d0bd4dda73
 AUTHORIZATION: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTMzNzA4MDQsImV4cCI6MTcxMzU0MzYwNH0.iK7pAs2DY6EzodLtCJIbcZHOvJOEMKrQTDQkY-0sUdc
 
 {
-    "product_name": "New jeans",
-    "product_thumb": "High-quanlity image",
-    "product_description": "Super shy",
-    "product_price": "100",
-    "product_quantity": "6",
-    "product_type": "Clothing",
+    "product_name": "G-(ide)",
+    "product_thumb": "Yuji so best",
+    "product_description": "Super lady",
+    "product_price": "1000",
+    "product_quantity": "4",
+    "product_type": "Electronics",
     "product_shop": "661b3d62dd0ac5d0bd4dda73",
     "product_attributes": {
-        "barnd": "JYP",
-        "size": "Super Shy",
-        "material": "Young cute girl"
+        "manufacturer": "None",
+        "model": "Super lady",
+        "color": "Sexy womens"
     }
 }
