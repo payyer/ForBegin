@@ -6,7 +6,8 @@ const KeyTokenService = require("../services/keyToken.service");
 const HEADER = {
   API_KEY: 'x-api-key',
   AUTHORIZATION: 'authorization',
-  CLIENT_ID: 'x-client-id'
+  CLIENT_ID: 'x-client-id',
+  REFRESH_TOKEN: 'x-refresh-token'
 }
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
@@ -22,17 +23,17 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
     // refreshToken
     const refreshToken = await jwt.sign(payload, privateKey, {
       // algorithm: "RS256", khi dùng thuật toán RSA thì uncomment
-      expiresIn: "2 days",
+      expiresIn: "7 days",
     });
 
     // Kiểm tra xem decode có ra kết quả không?
-    jwt.verify(accessToken, publicKey, (err, decoded) => {
-      if (err) {
-        console.error("error verify::", err);
-      } else {
-        console.log("decode verify::", decoded);
-      }
-    });
+    // jwt.verify(accessToken, publicKey, (err, decoded) => {
+    //   if (err) {
+    //     console.error("error verify::", err);
+    //   } else {
+    //     console.log("decode verify::", decoded);
+    //   }
+    // });
 
     return { accessToken, refreshToken };
 
@@ -51,19 +52,32 @@ const authentication = asyncHandle(async (req, res, next) => {
     6 - OK => return(next)
    */
 
-  //  1 - check userId missing?
   const userId = req.headers[HEADER.CLIENT_ID]
   if (!userId) throw new AuthFailError("Invalid User Request")
-  //  2 - get accessToken 
+
   const keyStore = await KeyTokenService.findByUserId(userId)
   if (!keyStore) throw new NodeFoundError("Not Found KeyStore")
 
-  // 3 - Verify Token
+  if (req.headers[HEADER.REFRESH_TOKEN]) {
+    try {
+      const refreshToken = req.headers[HEADER.REFRESH_TOKEN]
+      const decodedUser = jwt.verify(refreshToken, keyStore.privateKey)
+      console.log({ decodedUser })
+      // 5 -Check KeyStore with this user ID
+      if (userId != decodedUser.userId) throw new AuthFailError("Invalid User")
+      req.user = decodedUser
+      req.keyStore = keyStore
+      req.refreshToken = refreshToken
+      return next()
+    } catch (error) {
+      throw error
+    }
+  }
+
   const accessToken = req.headers[HEADER.AUTHORIZATION]
   if (!accessToken) throw new AuthFailError("Invalid Request")
 
   try {
-    // 5 -Check KeyStore with this user ID
     const decodeUser = jwt.verify(accessToken, keyStore.publicKey)
     if (userId != decodeUser.userId) throw new AuthFailError("Invalid User")
     req.keyStore = keyStore
