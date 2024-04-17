@@ -51,7 +51,7 @@ const clothingSchema = new mongoose.Schema({
     },
     material: String
 }, {
-    collection: 'clothes',
+    collection: 'Clothes',
     timestamps: true
 })
 
@@ -68,7 +68,7 @@ const electronicSchema = new mongoose.Schema({
         type: String
     }
 }, {
-    collection: 'electronics',
+    collection: 'Electronics',
     timestamps: true
 })
 
