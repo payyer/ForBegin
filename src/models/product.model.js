@@ -25,7 +25,7 @@ var productSchema = new mongoose.Schema({
     product_type: {
         type: String,
         required: true,
-        enum: ['Electronics', 'Clothing', 'Furniture']
+        enum: ['Electronic', 'Clothing', 'Furniture']
     },
     product_shop: {
         type: mongoose.Schema.Types.ObjectId,
@@ -82,10 +82,31 @@ const electronicSchema = new mongoose.Schema({
     timestamps: true
 })
 
+// define product type = furniture
+const furnitureSchema = new mongoose.Schema({
+    barnd: {
+        type: String,
+        required: true
+    },
+    size: {
+        type: String
+    },
+    material: {
+        type: String
+    },
+    product_shop: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shop'
+    },
+}, {
+    collection: 'Furnitures',
+    timestamps: true
+})
 
 //Export the model
 module.exports = {
     product: mongoose.model(DOCUMENT_NAME, productSchema),
     clothing: mongoose.model('Clothing', clothingSchema),
-    electronic: mongoose.model('Electronic', electronicSchema)
+    electronic: mongoose.model('Electronic', electronicSchema),
+    furniture: mongoose.model('Furniture', furnitureSchema),
 }
