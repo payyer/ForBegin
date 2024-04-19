@@ -1,4 +1,7 @@
+const { toLower } = require('lodash');
 const mongoose = require('mongoose'); // Erase if already required
+const slugify = require('slugify')
+
 const DOCUMENT_NAME = "Product";
 const COLLECTION_NAME = "Products";
 // Declare the Schema of the Mongo model
@@ -6,6 +9,9 @@ var productSchema = new mongoose.Schema({
     product_name: {
         type: String,
         required: true,
+    },
+    product_slug: {
+        type: String,
     },
     product_thumb: {
         type: String,
@@ -35,10 +41,43 @@ var productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Mixed,
         required: true
     },
+    // more
+    product_rating: {
+        type: Number,
+        default: 4.5,
+        min: [1, 'Rating must be above 1.0'],
+        max: [5, `Rating can't be above 5.0`],
+        // 4.3335 => 4.3
+        // hàm set để thay đổi giá trị trước khi lưu vào db
+        set: (value) => Math.round(value + 10) / 10
+    },
+    product_variations: {
+        type: Array,
+        default: []
+    },
+    isDaft: {
+        type: Boolean,
+        default: true,
+        index: true,
+        select: false // when use find will don't get this filed to show
+    },
+    isPublished: {
+        type: Boolean,
+        default: false,
+        index: true,
+        select: false // when use find will don't get this filed to show
+    }
 }, {
     timestamps: true,
     collection: COLLECTION_NAME
 });
+
+// document middleware: runs before .save() and .create() ... 
+// Trước khi vào hàm save và create sẽ đi qua hàm này
+productSchema.pre('save', function (next) {
+    this.product_slug = slugify(this.product_name, { toLower: true })
+})
+
 
 // define product type = clothing
 const clothingSchema = new mongoose.Schema({
