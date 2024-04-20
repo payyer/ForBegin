@@ -1,4 +1,3 @@
-const { toLower } = require('lodash');
 const mongoose = require('mongoose'); // Erase if already required
 const slugify = require('slugify')
 
@@ -55,7 +54,7 @@ var productSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-    isDaft: {
+    isDraft: {
         type: Boolean,
         default: true,
         index: true,
@@ -75,7 +74,8 @@ var productSchema = new mongoose.Schema({
 // document middleware: runs before .save() and .create() ... 
 // Trước khi vào hàm save và create sẽ đi qua hàm này
 productSchema.pre('save', function (next) {
-    this.product_slug = slugify(this.product_name, { toLower: true })
+    this.product_slug = slugify(this.product_name, { lower: true })
+    next()
 })
 
 

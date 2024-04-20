@@ -1,5 +1,10 @@
 const { ConflicRequestError, BadRequestError } = require('../core/error.respone')
 const { product, clothing, electronic, furniture } = require('../models/product.model')
+const {
+    findAllDraftsForShop,
+    publishProductByShop,
+    findAllPublishForShop
+} = require('../models/repository/product.repo')
 
 // use factory method parttern
 // Define Factory class to create product
@@ -28,11 +33,28 @@ class ProductFactory {
         ProductFactory.productRegistry[type] = classRef
     }
 
+    // POST
     static createProduct(type, payload) {
         const productClass = ProductFactory.productRegistry[type]
         if (!productClass) throw new BadRequestError(`Invalid Product Type! ${type}`, 400)
 
         return new productClass(payload).createProduct()
+    }
+
+    // PUT
+    static async publishProductByShop({ product_shop, product_id }) {
+        return await publishProductByShop({ product_shop, product_id })
+    }
+
+    // query
+    static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
+        const query = { product_shop, isDraft: true }
+        return await findAllDraftsForShop({ query, limit, skip })
+    }
+
+    static async findAllPublishForShop({ product_shop, limit = 50, skip = 0 }) {
+        const query = { product_shop, isPublished: true }
+        return await findAllPublishForShop({ query, limit, skip })
     }
 }
 
