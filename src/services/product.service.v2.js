@@ -3,7 +3,8 @@ const { product, clothing, electronic, furniture } = require('../models/product.
 const {
     findAllDraftsForShop,
     publishProductByShop,
-    findAllPublishForShop
+    findAllPublishForShop,
+    unpublishProductByShop
 } = require('../models/repository/product.repo')
 
 // use factory method parttern
@@ -44,6 +45,10 @@ class ProductFactory {
     // PUT
     static async publishProductByShop({ product_shop, product_id }) {
         return await publishProductByShop({ product_shop, product_id })
+    }
+
+    static async unpublishProductByShop({ product_shop, product_id }) {
+        return await unpublishProductByShop({ product_shop, product_id })
     }
 
     // query

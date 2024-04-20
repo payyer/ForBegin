@@ -22,6 +22,7 @@ const queryProduct = async ({ query, limit, skip }) => {
 }
 
 // Put
+
 const publishProductByShop = async ({ product_shop, product_id }) => {
     const foundShop = await product.findOne({
         product_shop: new mongoose.Types.ObjectId(product_shop),
@@ -37,8 +38,25 @@ const publishProductByShop = async ({ product_shop, product_id }) => {
     return modifiedCount
 }
 
+const unpublishProductByShop = async ({ product_shop, product_id }) => {
+    const foundShop = await product.findOne({
+        product_shop: new mongoose.Types.ObjectId(product_shop),
+        _id: new mongoose.Types.ObjectId(product_id),
+    })
+
+    if (!foundShop) return null
+
+    foundShop.isDraft = true;
+    foundShop.isPublished = false
+
+
+    const { modifiedCount } = await foundShop.updateOne(foundShop)
+    return modifiedCount
+}
+
 module.exports = {
     findAllDraftsForShop,
     publishProductByShop,
-    findAllPublishForShop
+    findAllPublishForShop,
+    unpublishProductByShop
 }

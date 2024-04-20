@@ -8,6 +8,7 @@ const productController = require("../../controllers/product.controller");
 router.use(authentication)
 router.post('', asyncHandle(productController.createNewProduct))
 router.put('/publish/:id', asyncHandle(productController.publishProductByShop))
+router.put('/unpublish/:id', asyncHandle(productController.unpublishProductByShop))
 
 //query
 router.get('/isDraft', asyncHandle(productController.getAllDraftForShop))
