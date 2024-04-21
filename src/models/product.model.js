@@ -71,6 +71,9 @@ var productSchema = new mongoose.Schema({
     collection: COLLECTION_NAME
 });
 
+
+// create index for search
+productSchema.index({ product_name: 'text', product_description: 'text' })
 // document middleware: runs before .save() and .create() ... 
 // Trước khi vào hàm save và create sẽ đi qua hàm này
 productSchema.pre('save', function (next) {

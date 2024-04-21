@@ -4,7 +4,8 @@ const {
     findAllDraftsForShop,
     publishProductByShop,
     findAllPublishForShop,
-    unpublishProductByShop
+    unpublishProductByShop,
+    searchProductByUser
 } = require('../models/repository/product.repo')
 
 // use factory method parttern
@@ -60,6 +61,12 @@ class ProductFactory {
     static async findAllPublishForShop({ product_shop, limit = 50, skip = 0 }) {
         const query = { product_shop, isPublished: true }
         return await findAllPublishForShop({ query, limit, skip })
+    }
+
+    static async getListSearchProduct({ keySearch }) {
+        const a = await searchProductByUser({ keySearch })
+        console.log("Ket qua a", a)
+        return a
     }
 }
 

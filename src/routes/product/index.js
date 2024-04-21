@@ -1,11 +1,14 @@
 const express = require("express");
-const router = express.Router();
-const { authentication } = require("../../auth/authUtils");
-const { asyncHandle } = require("../../helpers/asyncHandler");
 const productController = require("../../controllers/product.controller");
+const { asyncHandle } = require("../../helpers/asyncHandler");
+const { authentication } = require("../../auth/authUtils");
+const router = express.Router();
+
+router.get('/search/:keySearch', asyncHandle(productController.getListSearchProduct))
 
 // set authen for router
 router.use(authentication)
+
 router.post('', asyncHandle(productController.createNewProduct))
 router.put('/publish/:id', asyncHandle(productController.publishProductByShop))
 router.put('/unpublish/:id', asyncHandle(productController.unpublishProductByShop))
