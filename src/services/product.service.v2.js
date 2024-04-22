@@ -6,7 +6,8 @@ const {
     findAllPublishForShop,
     unpublishProductByShop,
     searchProductByUser,
-    findAllProduct
+    findAllProduct,
+    findProduct
 } = require('../models/repository/product.repo')
 
 // use factory method parttern
@@ -84,8 +85,8 @@ class ProductFactory {
         })
     }
 
-    static async findProduct() {
-
+    static async findProduct({ product_id }) {
+        return await findProduct({ product_id, unSelect: [`__v`] })
     }
 
 

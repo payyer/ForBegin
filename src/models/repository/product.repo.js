@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose")
 const { product, electronic, clothing, furniture } = require("../product.model")
-const { getSelectData } = require("../../utils")
+const { getSelectData, unGetUnSelectData } = require("../../utils")
 
 // query
 const findAllDraftsForShop = async ({ query, limit, skip }) => {
@@ -50,6 +50,13 @@ const findAllProduct = async ({ limit, sort, page, filter, select }) => {
     return products
 }
 
+const findProduct = async ({ product_id, unSelect }) => {
+    return await product
+        .findById(product_id)
+        .select(unGetUnSelectData(unSelect))
+        .lean()
+}
+
 // Put
 
 const publishProductByShop = async ({ product_shop, product_id }) => {
@@ -89,5 +96,6 @@ module.exports = {
     findAllPublishForShop,
     unpublishProductByShop,
     searchProductByUser,
-    findAllProduct
+    findAllProduct,
+    findProduct
 }
