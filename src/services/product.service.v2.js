@@ -7,8 +7,10 @@ const {
     unpublishProductByShop,
     searchProductByUser,
     findAllProduct,
-    findProduct
+    findProduct,
+    updateProductById
 } = require('../models/repository/product.repo')
+const { removeUndefindObject, updateNestedObjectParser } = require('../utils')
 
 // use factory method parttern
 // Define Factory class to create product
@@ -46,6 +48,14 @@ class ProductFactory {
     }
 
     // PUT
+
+    static updateProduct(type, productId, payload) {
+        const productClass = ProductFactory.productRegistry[type]
+        if (!productClass) throw new BadRequestError(`Invalid Product Type! ${type}`, 400)
+
+        return new productClass(payload).updateProduct(productId)
+    }
+
     static async publishProductByShop({ product_shop, product_id }) {
         return await publishProductByShop({ product_shop, product_id })
     }
@@ -54,9 +64,7 @@ class ProductFactory {
         return await unpublishProductByShop({ product_shop, product_id })
     }
 
-    static async updateProduct() {
 
-    }
 
     // query
     static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
@@ -116,6 +124,11 @@ class Product {
             _id: product_id // này là toán tử Spread // quên lên gg đọc
         })
     }
+
+    // update Product
+    async updateProduct(productId, payload) {
+        return await updateProductById({ productId, payload, model: product })
+    }
 }
 
 // Define sub class for different product types Clothing
@@ -133,17 +146,28 @@ class Clothing extends Product {
 
         return newProduct;
     }
+    // update product
+    async updateProduct(productId) {
+        // 1. remove attribute = null or undefine
+        // console.log('[This 1] ::: ', this)
+        const objectParams = removeUndefindObject(this)
+        // console.log('[This 2] ::: ', this)
 
-    // async updateProduct(productId) {
-    //     // 1. remove attribute  has null or undifined value
-    //     const objectParams
-    //     // 2. Check ở đâu?
-    //     if (objectParams.product_attributes) {
-    //         // update child [Clothing, Electronic, Furniture]
-    //     }
+        // 2. Update in child or parent (ex: Clothing or Product)
+        if (objectParams.product_attributes) {
+            // update child
+            await updateProductById({
+                productId,
+                // Section 18
+                // Này quan trọng. updateNest... để loại bỏ null và undefined khi clinet gửi về tránh việc mất data
+                payload: updateNestedObjectParser(objectParams.product_attributes),
+                model: clothing
+            })
+        }
+        const updateproduct = await super.updateProduct(productId, updateNestedObjectParser(objectParams))
 
-
-    // }
+        return updateproduct
+    }
 }
 
 // Define sub class for different product types Electronic
