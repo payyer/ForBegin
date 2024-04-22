@@ -133,6 +133,17 @@ class Clothing extends Product {
 
         return newProduct;
     }
+
+    // async updateProduct(productId) {
+    //     // 1. remove attribute  has null or undifined value
+    //     const objectParams
+    //     // 2. Check ở đâu?
+    //     if (objectParams.product_attributes) {
+    //         // update child [Clothing, Electronic, Furniture]
+    //     }
+
+
+    // }
 }
 
 // Define sub class for different product types Electronic

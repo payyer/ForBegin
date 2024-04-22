@@ -40,10 +40,10 @@ POST {{url_dev}}product
 Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
 x-client-id: 661b3d62dd0ac5d0bd4dda73
-AUTHORIZATION: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTM3MTIyNzgsImV4cCI6MTcxMzg4NTA3OH0.x3w0tlWJIDT1MOqnZExQz_lGD2NH3uW43EqcFtFMxu0
+AUTHORIZATION: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTM3Njc0MTIsImV4cCI6MTcxMzk0MDIxMn0.sqlyd3r2wpnonzsRIarH0DVTrhcoVXzQqBjzvqBWZ8E
 
 {
-    "product_name": "Băng quấn cổ tay",
+    "product_name": "Băng quấn cổ tay 2",
     "product_thumb": "Jennie",
     "product_description": "Băng quấn siêu bền giúp cử ta ngon lành",
     "product_price": "1000",
@@ -68,7 +68,7 @@ PUT  {{url_dev}}product/unpublish/66235f05633f4ae000d6dfd4
 Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
 x-client-id: 661b3d62dd0ac5d0bd4dda73
-AUTHORIZATION:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTM3NjI4MjQsImV4cCI6MTcxMzkzNTYyNH0.r87L-ZMUtFl1tDosvFi-lDaz8mjc7P08KY7kWLwAgKo
+AUTHORIZATION:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTM1OTMyMzEsImV4cCI6MTcxMzc2NjAzMX0.fbv2Kl8SD-_H4iFgBJw2yHuqU2dNpCcnUlkKB5m4B6o
 
 ### Get All List Search Product
 GET  {{url_dev}}product/search/Băng quấn cổ tay
@@ -81,14 +81,14 @@ GET  {{url_dev}}product/isDraft
 Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
 x-client-id: 661b3d62dd0ac5d0bd4dda73
-AUTHORIZATION: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTM1OTMyMzEsImV4cCI6MTcxMzc2NjAzMX0.fbv2Kl8SD-_H4iFgBJw2yHuqU2dNpCcnUlkKB5m4B6o
+AUTHORIZATION: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTM3Njc4ODksImV4cCI6MTcxMzk0MDY4OX0.Zzxam99pplT-jOeiQdJYynUdgvmRU_3DPn9e3m2KMDU
 
 ### Get All Published Product For Shop  
 GET  {{url_dev}}product/published
 Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
 x-client-id: 661b3d62dd0ac5d0bd4dda73
-AUTHORIZATION:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTM3NjI4MjQsImV4cCI6MTcxMzkzNTYyNH0.r87L-ZMUtFl1tDosvFi-lDaz8mjc7P08KY7kWLwAgKo
+AUTHORIZATION:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFiM2Q2MmRkMGFjNWQwYmQ0ZGRhNzMiLCJlbWFpbCI6InN0cmluZ0BnbWFpbC5jb20iLCJpYXQiOjE3MTM3Njc4ODksImV4cCI6MTcxMzk0MDY4OX0.Zzxam99pplT-jOeiQdJYynUdgvmRU_3DPn9e3m2KMDU
 
 ### Get All Published Product For User  
 GET  {{url_dev}}product
@@ -96,6 +96,6 @@ Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
 
 ### Get Detail Product For User  
-GET  {{url_dev}}product/66252cc9cf814fef4638527e
+GET  {{url_dev}}product/detail/66252cc9cf814fef4638527e
 Content-Type: application/json
 x-api-key: 3364bf4b357ae34149cf024ba0bbd17a34c2599a0227576106d898794f846fc5dda3f492e5e877ba7f51c91d1b376a7c4f26c19167e5c8091b380a43b8f2a4e7
