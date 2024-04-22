@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose")
 const { product, electronic, clothing, furniture } = require("../product.model")
+const { getSelectData } = require("../../utils")
 
 // query
 const findAllDraftsForShop = async ({ query, limit, skip }) => {
@@ -28,10 +29,25 @@ const searchProductByUser = async ({ keySearch }) => {
             isPublished: true,
             $text: { $search: regexSearch }
         }, { score: { $meta: 'textScore' } })
-        .sort({ score: { $meta: 'textScore' } })
+        .sort({ score: { $meta: 'textScore' } }) // Tính điểm: từ tìm kiếm càng match sẽ dc hiện thị truóc
         .lean()
 
     return results
+}
+
+const findAllProduct = async ({ limit, sort, page, filter, select }) => {
+    // Này đơn giản: nếu page = 1, limit 50 => skip = 0 * 50 ==> không skip sản phẩm nào
+    // page = 1 ==> 1 * 50 ==> skip 50 sản phẩm đầu ở page 2
+    const skip = (page - 1) * limit
+    const sortBy = sort === 'ctime' ? { _id: 1 } : { _id: - 1 }
+    const products = await product
+        .find(filter)
+        .sort(sortBy)
+        .skip(skip)
+        .limit(limit)
+        .select(getSelectData(select))
+        .lean()
+    return products
 }
 
 // Put
@@ -72,5 +88,6 @@ module.exports = {
     publishProductByShop,
     findAllPublishForShop,
     unpublishProductByShop,
-    searchProductByUser
+    searchProductByUser,
+    findAllProduct
 }

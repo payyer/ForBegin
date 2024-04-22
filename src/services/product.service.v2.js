@@ -5,7 +5,8 @@ const {
     publishProductByShop,
     findAllPublishForShop,
     unpublishProductByShop,
-    searchProductByUser
+    searchProductByUser,
+    findAllProduct
 } = require('../models/repository/product.repo')
 
 // use factory method parttern
@@ -52,6 +53,10 @@ class ProductFactory {
         return await unpublishProductByShop({ product_shop, product_id })
     }
 
+    static async updateProduct() {
+
+    }
+
     // query
     static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
         const query = { product_shop, isDraft: true }
@@ -68,6 +73,22 @@ class ProductFactory {
         console.log("Ket qua a", a)
         return a
     }
+
+    static async findAllProduct({ limit = 50, sort = 'ctime', page = 1, filter = { isPublished: true } }) {
+        return await findAllProduct({
+            limit,
+            sort,
+            page,
+            filter,
+            select: ["product_name", "product_thumb", "product_price"]
+        })
+    }
+
+    static async findProduct() {
+
+    }
+
+
 }
 
 // Define base product class

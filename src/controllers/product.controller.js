@@ -76,10 +76,16 @@ class ProductController {
     }
 
     getListSearchProduct = async (req, res, next) => {
-        console.log(" req.params", req.params)
         new SuccessRespone({
             message: "Get List Search Product Success!",
             metadata: await ProductServiceV2.getListSearchProduct(req.params)
+        }).send(res)
+    }
+
+    getAllProduct = async (req, res, next) => {
+        new SuccessRespone({
+            message: "Get All Product Success!",
+            metadata: await ProductServiceV2.findAllProduct(req.query)
         }).send(res)
     }
 
