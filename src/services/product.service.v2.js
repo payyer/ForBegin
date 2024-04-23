@@ -1,5 +1,6 @@
 const { ConflicRequestError, BadRequestError } = require('../core/error.respone')
 const { product, clothing, electronic, furniture } = require('../models/product.model')
+const { insertInventory } = require('../models/repository/inventory.repo')
 const {
     findAllDraftsForShop,
     publishProductByShop,
@@ -119,10 +120,18 @@ class Product {
     // create new product
     async createProduct(product_id) {
         // this là các property khai báo trong contructor
-        return await product.create({
+        const newProduct = await product.create({
             ...this,
             _id: product_id // này là toán tử Spread // quên lên gg đọc
         })
+        if (newProduct) {
+            await insertInventory({
+                productId: newProduct._id,
+                shopId: newProduct.product_shop,
+                stock: newProduct.product_quantity,
+            })
+        }
+        return newProduct
     }
 
     // update Product
