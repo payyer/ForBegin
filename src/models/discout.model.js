@@ -53,19 +53,19 @@ const discountSchema = new Schema(
             default: []
         },
         // SL tối đa 1 user có thể sử dụng
-        dicount_max_users_per_user: {
+        discount_max_users_per_user: {
             type: Number,
             required: true
         },
-        dicount_min_order_value: {
+        discount_min_order_value: {
             type: Number,
             required: true,
         },
-        dicount_shopId: {
+        discount_shopId: {
             type: Schema.Types.ObjectId,
             ref: 'Shop'
         },
-        dicount_is_active: {
+        discount_is_active: {
             type: Boolean,
             default: true
         },

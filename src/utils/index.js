@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const { default: mongoose } = require("mongoose");
 
 // Hàm chung để lọc ra các fields cần trả về
 const getInforData = ({ fields = [], object = {} }) => {
@@ -10,7 +11,7 @@ const getSelectData = (select = []) => {
     return Object.fromEntries(select.map(el => [el, 1]))
 }
 // ['a', 'b'] ==> {a: 0, b: 0}
-const unGetUnSelectData = (select = []) => {
+const unGetSelectData = (select = []) => {
     return Object.fromEntries(select.map(el => [el, 0]))
 }
 
@@ -65,10 +66,15 @@ const updateNestedObjectParser = obj => {
     return final
 }
 
+const convertStringToObjIdMongoDB = (id) => {
+    return new mongoose.Types.ObjectId(id)
+}
+
 module.exports = {
     getInforData,
     getSelectData,
-    unGetUnSelectData,
+    unGetSelectData,
     removeUndefindObject,
-    updateNestedObjectParser
+    updateNestedObjectParser,
+    convertStringToObjIdMongoDB
 }
